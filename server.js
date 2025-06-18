@@ -33,9 +33,17 @@ app.get("/health", (req, res) => {
 });
 
 app.get("/ip", (req, res) => {
-  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-  console.log(`IP Address: ${ip}, Request ID: ${req.id ?? "N/A"}`);
-  res.json({ ip: ip, reqId: req.id ?? "N/A" });
+  const ip = req.ip;
+  console.log(
+    `IP address requested: ${ip}
+    || X-Forwarded-For: ${req.headers["x-forwarded-for"] || ""} 
+    || Real IP: ${req.socket.remoteAddress}`
+  );
+  res.json({
+    ip,
+    xForwardedFor: req.headers["x-forwarded-for"] || "",
+    realIp: req.socket.remoteAddress,
+  });
 });
 
 app.get("/limit", limiter, (req, res) => {
