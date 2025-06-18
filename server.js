@@ -20,6 +20,8 @@ const limiter = rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
 
+app.set("trust proxy", 1);
+
 // Basic route
 app.get("/", (req, res) => {
   res.json({ message: "Express server is running!" });
