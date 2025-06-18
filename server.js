@@ -10,8 +10,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Rate limiting middleware
 const limiter = rateLimit({
-  windowMs: 1 * 30 * 1000, 
-  max: 5, // Limit each IP to 5 requests per windowMs
+  windowMs: 1 * 30 * 1000,
+  max: 3, // Limit each IP to 5 requests per windowMs
   message: {
     error: "Too many requests from this IP, please try again later.",
     retryAfter: "30 seconds",
@@ -32,7 +32,7 @@ app.get("/health", (req, res) => {
 
 app.get("/ip", (req, res) => {
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-
+  console.log(`IP Address: ${ip}, Request ID: ${req.id ?? "N/A"}`);
   res.json({ ip: ip, reqId: req.id ?? "N/A" });
 });
 
