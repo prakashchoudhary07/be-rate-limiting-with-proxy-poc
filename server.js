@@ -20,7 +20,7 @@ const limiter = rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
 
-// app.set("trust proxy", 1);
+app.set("trust proxy", 2);
 
 // Basic route
 app.get("/", (req, res) => {
